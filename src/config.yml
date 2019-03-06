@@ -1,0 +1,3 @@
+api_path:
+  tokyo: 'http://weather.livedoor.com/forecast/rss/area/130010.xml',
+  osaka: 'http://weather.livedoor.com/forecast/rss/area/270000.xml'

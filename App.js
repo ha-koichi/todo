@@ -8,6 +8,14 @@
 
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View} from 'react-native';
+// import { Provider } from 'react-redux';
+// import { Container } from 'native-base';
+
+// import { Store } from './src/store'
+
+import Navbar from './src/components/Navbar'
+import SegmentButton from './src/components/SegmentButton'
+import Weather from './src/components/Weather'
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
@@ -20,11 +28,13 @@ type Props = {};
 export default class App extends Component<Props> {
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to React Native!</Text>
-        <Text style={styles.instructions}>To get started, edit App.js</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
-      </View>
+      // <Provider store={store}>
+        <View style={styles.container}>
+          <Navbar />
+          <SegmentButton />
+          <Weather />
+        </View>
+      // </Provider>
     );
   }
 }
@@ -32,9 +42,9 @@ export default class App extends Component<Props> {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    // justifyContent: 'center',
+    // alignItems: 'center',
+    // backgroundColor: '#F5FCFF',
   },
   welcome: {
     fontSize: 20,
