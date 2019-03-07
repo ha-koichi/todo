@@ -8,10 +8,13 @@
 
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View} from 'react-native';
-// import { Provider } from 'react-redux';
-// import { Container } from 'native-base';
 
-// import { Store } from './src/store'
+import { combineReducers } from 'redux';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux'
+
+import todo from './src/reducers'
+import { addTodo } from './src/actions'
 
 import Navbar from './src/components/Navbar'
 import SegmentButton from './src/components/SegmentButton'
@@ -24,17 +27,22 @@ const instructions = Platform.select({
     'Shake or press menu button for dev menu',
 });
 
+let store = createStore(todo)
+
+store.dispatch(addTodo('Hello World!'))
+console.log(store.getState()) 
+
 type Props = {};
 export default class App extends Component<Props> {
   render() {
     return (
-      // <Provider store={store}>
+      <Provider store={store}>
         <View style={styles.container}>
           <Navbar />
           <SegmentButton />
           <Weather />
         </View>
-      // </Provider>
+      </Provider>
     );
   }
 }

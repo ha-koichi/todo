@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { SegmentedControlIOS, StyleSheet } from 'react-native';
-import { Container, Header, Left, Body, Right, Button, Icon, Segment, Content, Text } from 'native-base';
+
+import { connect } from 'react-redux'
+import { addTodo } from '../actions'
 
 export default class SegmentButton extends Component {
 
@@ -17,7 +19,8 @@ export default class SegmentButton extends Component {
         values={['東京', '大坂']}
         selectedIndex={this.state.selectedIndex}
         onChange={(event) => {
-          this.setState({selectedIndex: event.nativeEvent.selectedSegmentIndex});
+          dispatch(addTodo(input.value));
+          // this.setState({selectedIndex: event.nativeEvent.selectedSegmentIndex});
         }}
         style={styles.segmentButton}
       />
@@ -36,3 +39,5 @@ const styles = StyleSheet.create({
     // backgroundColor: '#F5FCFF',
   },
 });
+
+SegmentButton = connect()(SegmentButton)

@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import {
   StyleSheet,
   View,
+  Text,
 } from 'react-native';
-
-import { Container, Header, Content, Card, CardItem, Text, Body } from "native-base";
 
 import WeatherList from './WeatherList'
 import SegmentButton from './SegmentButton'
