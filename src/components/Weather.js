@@ -47,9 +47,9 @@ export default class Weather extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    height: 20,
-    flex: 1,
-    marginTop: 10,
+    // height: 20,
+    flex: 4,
+    // marginTop: 10,
     // justifyContent: 'center',
     // alignItems: 'center',
     // backgroundColor: '#F5FCFF',
