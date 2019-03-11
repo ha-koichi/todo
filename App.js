@@ -29,20 +29,31 @@ const instructions = Platform.select({
 
 let store = createStore(todo)
 
-store.dispatch(addTodo('Hello World!'))
-console.log(store.getState()) 
-
 type Props = {};
 export default class App extends Component<Props> {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      select: 0,
+    };
+  }
+
+  callback (data) {
+    this.setState({select:data.select})
+    // alert(data.name + ' :: ' + data.select)
+  }
+
   render() {
     return (
-      <Provider store={store}>
+      // <Provider store={store}>
         <View style={styles.container}>
           <Navbar />
-          <SegmentButton />
-          <Weather />
+          <SegmentButton onEventCallback={e => this.callback(e)}  />
+          <Text>{this.state.select}</Text>
+          <Weather select={this.state.select} />
         </View>
-      </Provider>
+      // </Provider>
     );
   }
 }

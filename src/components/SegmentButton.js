@@ -22,6 +22,11 @@ export default class SegmentButton extends Component {
     console.log("test")
   }
 
+  click (event) {
+    this.props.onEventCallback({
+      select: event.nativeEvent.selectedSegmentIndex,
+    })
+  }
 
   render() {
     return (
@@ -30,6 +35,7 @@ export default class SegmentButton extends Component {
           values={['東京', '大阪']}
           selectedIndex={this.state.selectedIndex}
           onChange={(event) => {
+            this.click(event)
             // dispatch(addTodo(input.value));
             this.setState({selectedIndex: event.nativeEvent.selectedSegmentIndex});
           }}
