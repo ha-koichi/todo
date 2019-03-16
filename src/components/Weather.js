@@ -5,6 +5,8 @@ import {
   Text,
 } from 'react-native';
 
+import { connect } from 'react-redux'
+
 // import {getWeather} from '../Api';
 // import Api from '../Api'
 import axios from 'axios';
@@ -12,7 +14,7 @@ import Config from 'react-native-config';
 
 import WeatherList from './WeatherList'
 
-export default class Weather extends Component {
+export class Weather extends Component {
 
   constructor(props) {
     super(props);
@@ -80,3 +82,10 @@ const styles = StyleSheet.create({
   }
 });
 
+const mapStateToProps = state => ({
+  select: state.data.select
+})
+
+export default connect(
+  mapStateToProps
+)(Weather)

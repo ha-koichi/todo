@@ -13,8 +13,8 @@ import { combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux'
 
-import todo from './src/reducers'
-import { addTodo } from './src/actions'
+import reducers from './src/reducers'
+import { store } from './src/redux'
 
 import Navbar from './src/components/Navbar'
 import SegmentButton from './src/components/SegmentButton'
@@ -27,31 +27,19 @@ const instructions = Platform.select({
     'Shake or press menu button for dev menu',
 });
 
-let store = createStore(todo)
 
 type Props = {};
 export default class App extends Component<Props> {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      select: 0,
-    };
-  }
-
-  callback (data) {
-    this.setState({select:data.select})
-  }
-
   render() {
     return (
-      // <Provider store={store}>
+      <Provider store={store}>
         <View style={styles.container}>
           <Navbar />
-          <SegmentButton onEventCallback={e => this.callback(e)}  />
-          <Weather select={this.state.select} />
+          <SegmentButton />
+          <Weather />
         </View>
-      // </Provider>
+      </Provider>
     );
   }
 }

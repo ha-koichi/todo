@@ -2,41 +2,29 @@ import React, { Component } from 'react';
 import { SegmentedControlIOS, StyleSheet, View, Text } from 'react-native';
 
 import { connect } from 'react-redux'
-import { addTodo } from '../actions'
+import { setSelect } from '../redux'
+import {store} from '../redux'
 
-export default class SegmentButton extends Component {
+import {  
+  combineReducers,
+  createStore,
+} from 'redux';
 
-  constructor(props) {
-    super(props);
-    this.showCirculares = this.showCirculares.bind(this);
-    this.state = {
-      selectedIndex: 0,
-    };
-  }
-
-  showCirculares(){
-    this.props.showView("circulares");
-  }
-
-  click (event) {
-    this.props.onEventCallback({
-      select: event.nativeEvent.selectedSegmentIndex,
-    })
-  }
+export class SegmentButton extends Component {
 
   render() {
     return (
       <View style={styles.container}>
+        <Text>My selesct is {this.props.select}.</Text>
         <SegmentedControlIOS
           values={['東京', '大阪']}
-          selectedIndex={this.state.selectedIndex}
+          selectedIndex={this.props.select}
           onChange={(event) => {
-            this.click(event)
-            // dispatch(addTodo(input.value));
-            this.setState({selectedIndex: event.nativeEvent.selectedSegmentIndex});
+            this.props.setSelect(event.nativeEvent.selectedSegmentIndex)
           }}
           style={styles.segmentButton}
         />
+        <Text>現在のstore: {JSON.stringify(store.getState())}</Text>
       </View>
     );
   }
@@ -57,4 +45,15 @@ const styles = StyleSheet.create({
   }
 });
 
-SegmentButton = connect()(SegmentButton)
+const mapStateToProps = state => ({
+  select: state.data.select
+})
+
+const mapDispatchToProps = {
+  setSelect
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SegmentButton)
