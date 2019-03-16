@@ -18,10 +18,6 @@ export default class SegmentButton extends Component {
     this.props.showView("circulares");
   }
 
-  componentDidMount(){
-    console.log("test")
-  }
-
   click (event) {
     this.props.onEventCallback({
       select: event.nativeEvent.selectedSegmentIndex,
@@ -41,7 +37,6 @@ export default class SegmentButton extends Component {
           }}
           style={styles.segmentButton}
         />
-        <Text>{this.state.selectedIndex}</Text>
       </View>
     );
   }

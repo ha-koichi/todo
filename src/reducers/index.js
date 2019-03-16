@@ -1,12 +1,12 @@
-const todo = (state, action) => {
-  switch (action.type) {
-    case 'ADD_TODO':
-      return {
-        id: action.id,
-        text: action.text
-      }
+const initialState = {
+  select: 0
+}
+
+export default function reducer(state = initialState, action) {
+  switch(action.type) {
+    case 'CHANGE_LOCATION':
+      return { select: state.select   }
     default:
       return state
   }
 }
-export default todo

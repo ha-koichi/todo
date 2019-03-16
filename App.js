@@ -41,7 +41,6 @@ export default class App extends Component<Props> {
 
   callback (data) {
     this.setState({select:data.select})
-    // alert(data.name + ' :: ' + data.select)
   }
 
   render() {
@@ -50,7 +49,6 @@ export default class App extends Component<Props> {
         <View style={styles.container}>
           <Navbar />
           <SegmentButton onEventCallback={e => this.callback(e)}  />
-          <Text>{this.state.select}</Text>
           <Weather select={this.state.select} />
         </View>
       // </Provider>

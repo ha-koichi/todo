@@ -5,112 +5,78 @@ import {
   Text,
 } from 'react-native';
 
-import * as rssParser from 'react-native-rss-parser';
-
 // import {getWeather} from '../Api';
 // import Api from '../Api'
 import axios from 'axios';
+import Config from 'react-native-config';
+
 import WeatherList from './WeatherList'
-import SegmentButton from './SegmentButton'
 
 export default class Weather extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      location: ['東京', '大阪'],
-      weatherList: [],
+      locations: ['東京', '大阪'],
+      weatherList: {},
+      main: {},
+      weather: ''
+      // w: []
     };
   }
 
-  // fetch() {
-  //   const request = axios.create({
-  //     baseURL: 'http://weather.livedoor.com'
-  //   })
-  //   request.get('/forecast/rss/area/130010.xml')
-  //   .then(res => {
-  //     alert(res.data)
-  //     return res.data;
-  //   });
-  // };
-
   componentDidMount(){
-    this.fetchData()
-    // this.setState({
-    //   forecast: Api()
-    // });
-    // alert(await Api())
+    this.fetchData(this.props.select)
+    
   }
-  
-  fetchData() {
-    const request = axios.create({
-      baseURL: 'http://weather.livedoor.com'
+  componentDidUpdate(prevProps){
+    if (this.props.select !== prevProps.select) {
+      this.fetchData(this.props.select);
+    }
+  }
+
+  fetchData(select) {
+    const weatherUrls = [
+      'Tokyo',
+      'Osaka'
+    ]
+    const url = 'http://api.openweathermap.org/data/2.5/weather?units=metric&q='
+    let query = url + weatherUrls[select] + ',japan&APPID=' + Config.APPID
+    console.log(query)
+    // weatherList.push(query)
+    axios.get(query)
+    .then( response => {
+      console.log(response.data.weather[0])
+      // return value
+      // weatherList.concat(value)
+      this.setState({ 
+        weatherList: response.data,
+        weather: response.data.weather[0],
+        temps: response.data.main,
+       });
     })
-    const parseString = require('react-native-xml2js').parseString;
-    request.get('/forecast/rss/area/130010.xml')
-    .then(res => {
-      parseString(res.data, function (err, result) {
-        console.log(rssParser.parse(res.data))
-        this.setState({ weatherList: rssParser.parse(res.data)});
-      })
-    })
-    .catch(function(error) {
-      console.log(error)
-    })
-    // .then(res => {
-    //   rssParser.parse(res.data) 
-    //     his.setState({ weatherList: res.data})
-       
-      // parseString(res.data, function (err, result) {
-      //   alert(res.data.class)
-      //   // this.setState({ forecast: result});
-      // });
-      // const parser = xml2js.Parser()
-      // parser.parseString(xml, (err, result) => {
-      //   this.setState({ forecast: result});
-      // });
-      // xml = new XMLParser().parseFromString(res.data)
-      // this.setState({forecast: xml})
-    // })
+    .catch((error) => console.error(error));
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <Text>{this.state.location[this.props.select]}</Text>
-        <Text>{this.state.weatherList}</Text>
-        <WeatherList />
+        <View style={styles.location}>
+          <Text style={styles.location}>{this.state.locations[this.props.select]}</Text>
+        </View>
+        <WeatherList temps={this.state.temps} weather={this.state.weather}/>
       </View>
-
-      // <Content padder>
-      //   <CardItem header bordered>
-      //     <Text>NativeBase</Text>
-      //   </CardItem>
-      //   <CardItem bordered>
-      //     <Body>
-      //       <Text>
-      //         NativeBase is a free and open source framework that enable
-      //         developers to build
-      //         high-quality mobile apps using React Native iOS and Android
-      //         apps
-      //         with a fusion of ES6.
-      //       </Text>
-      //     </Body>
-      //   </CardItem>
-      //   <WeatherList />
-      // </Content>
     );
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    // height: 20,
     flex: 4,
-    // marginTop: 10,
-    // justifyContent: 'center',
-    // alignItems: 'center',
-    // backgroundColor: '#F5FCFF',
   },
+  location: {
+    justifyContent: 'center',
+    flexDirection: 'row',
+  }
 });
 

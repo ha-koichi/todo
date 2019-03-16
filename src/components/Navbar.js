@@ -34,10 +34,6 @@ export default class Navbar extends Component {
 }
 
 class MyScene extends Component {
-  static propTypes = {
-    title: PropTypes.string.isRequired,
-    navigator: PropTypes.object.isRequired,
-  };
 
   _onForward = () => {
     this.props.navigator.push({
