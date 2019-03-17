@@ -6,13 +6,13 @@ import {
   ListView,
   View,
 } from 'react-native';
+import { connect } from 'react-redux'
 
-export default class WeatherList extends Component {
+export class WeatherList extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      data: '',
       temps: {
         temp: '',
         temp_max: '',
@@ -25,10 +25,10 @@ export default class WeatherList extends Component {
   }
 
   componentDidUpdate(prevProps){
-    if (this.props.temps !== prevProps.temps) {
+    if (this.props.weather !== prevProps.weather) {
       this.setState({
-        temps: this.props.temps,
-        weather: this.props.weather,
+        temps: this.props.weather.main,
+        weather: this.props.weather.weather[0],
       });
     }
   }
@@ -69,3 +69,11 @@ const styles = StyleSheet.create({
     borderTopColor: '#FF00FF00',
   },
 });
+
+const mapStateToProps = state => ({
+  weather: state.data.weather
+})
+
+export default connect(
+  mapStateToProps
+)(WeatherList)

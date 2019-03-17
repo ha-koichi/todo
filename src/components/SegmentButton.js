@@ -2,20 +2,13 @@ import React, { Component } from 'react';
 import { SegmentedControlIOS, StyleSheet, View, Text } from 'react-native';
 
 import { connect } from 'react-redux'
-import { setSelect } from '../redux'
-import {store} from '../redux'
-
-import {  
-  combineReducers,
-  createStore,
-} from 'redux';
+import { setSelect } from '../actions'
 
 export class SegmentButton extends Component {
 
   render() {
     return (
       <View style={styles.container}>
-        <Text>My selesct is {this.props.select}.</Text>
         <SegmentedControlIOS
           values={['東京', '大阪']}
           selectedIndex={this.props.select}
@@ -24,7 +17,6 @@ export class SegmentButton extends Component {
           }}
           style={styles.segmentButton}
         />
-        <Text>現在のstore: {JSON.stringify(store.getState())}</Text>
       </View>
     );
   }

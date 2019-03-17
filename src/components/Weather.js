@@ -6,12 +6,10 @@ import {
 } from 'react-native';
 
 import { connect } from 'react-redux'
-
-// import {getWeather} from '../Api';
-// import Api from '../Api'
 import axios from 'axios';
 import Config from 'react-native-config';
 
+import { getWeather } from '../actions'
 import WeatherList from './WeatherList'
 
 export class Weather extends Component {
@@ -20,10 +18,6 @@ export class Weather extends Component {
     super(props);
     this.state = {
       locations: ['東京', '大阪'],
-      weatherList: {},
-      main: {},
-      weather: ''
-      // w: []
     };
   }
 
@@ -44,18 +38,12 @@ export class Weather extends Component {
     ]
     const url = 'http://api.openweathermap.org/data/2.5/weather?units=metric&q='
     let query = url + weatherUrls[select] + ',japan&APPID=' + Config.APPID
-    console.log(query)
     // weatherList.push(query)
     axios.get(query)
     .then( response => {
-      console.log(response.data.weather[0])
       // return value
       // weatherList.concat(value)
-      this.setState({ 
-        weatherList: response.data,
-        weather: response.data.weather[0],
-        temps: response.data.main,
-       });
+      this.props.getWeather(response.data);
     })
     .catch((error) => console.error(error));
   }
@@ -66,7 +54,7 @@ export class Weather extends Component {
         <View style={styles.location}>
           <Text style={styles.location}>{this.state.locations[this.props.select]}</Text>
         </View>
-        <WeatherList temps={this.state.temps} weather={this.state.weather}/>
+        <WeatherList />
       </View>
     );
   }
@@ -86,6 +74,11 @@ const mapStateToProps = state => ({
   select: state.data.select
 })
 
+const mapDispatchToProps = {
+  getWeather
+}
+
 export default connect(
-  mapStateToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(Weather)

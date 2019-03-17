@@ -13,8 +13,8 @@ import { combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux'
 
-import reducers from './src/reducers'
-import { store } from './src/redux'
+import { reducer } from './src/reducers'
+// import { store } from './src/redux'
 
 import Navbar from './src/components/Navbar'
 import SegmentButton from './src/components/SegmentButton'
@@ -27,6 +27,11 @@ const instructions = Platform.select({
     'Shake or press menu button for dev menu',
 });
 
+export const reducers = combineReducers({  
+  data: reducer
+})
+
+export const store = createStore(reducers)
 
 type Props = {};
 export default class App extends Component<Props> {

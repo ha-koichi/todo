@@ -1,12 +1,14 @@
-const initialState = {
+INITIAL_STATE = {
   select: 0
 }
 
-export default function reducer(state = initialState, action) {
-  switch(action.type) {
+export const reducer = (state = INITIAL_STATE, action) => {
+  switch (action.type) {
     case 'CHANGE_LOCATION':
-      return { select: state.select   }
+      return {...state, select: action.select}
+    case 'GET_WEATHER':
+      return {...state, weather: action.weather}
     default:
-      return state
+      return state;
   }
 }
